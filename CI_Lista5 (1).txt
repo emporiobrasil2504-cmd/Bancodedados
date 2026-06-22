@@ -1,0 +1,109 @@
+create schema lista5;
+
+create table lista5.aluno(
+ nome varchar, 
+ cpf integer,
+ cidade varchar,
+ uf varchar,
+ primary key(cpf)
+ );
+
+create table lista5.formacao(
+id_formacao integer,
+nome varchar,
+salario float,
+primary key(id_formacao)
+);
+
+ create table lista5.professor(
+ nome varchar,
+ cpf integer,
+ id_formacao smallint,
+ data_admissao date,
+ data_desligamento date,
+ primary key(cpf),
+ foreign key(id_formacao) references lista5.formacao(id_formacao)
+);
+
+create table lista5.curso(  
+cod_curso integer,
+nome varchar,
+area varchar,
+carga_horaria smallint,
+primary key(cod_curso)  
+); 
+
+create table lista5.oferta(
+cod_oferta integer,
+cod_curso integer,
+cpf_prof integer,
+turno varchar,
+vagas smallint,
+ano smallint,
+localidade varchar,
+primary key(cod_oferta),
+foreign key(cod_curso) references lista5.curso(cod_curso),
+foreign key(cpf_prof) references lista5.professor(cpf)
+);
+create table lista5.matricula(
+ cpf_aluno integer,
+ cod_oferta integer,
+ nota float,
+ primary key(cpf_aluno,cod_oferta),
+ foreign key(cpf_aluno) references lista5.aluno(cpf),
+ foreign key(cod_oferta) references lista5.oferta(cod_oferta)
+); 
+
+insert into lista5.aluno values('Joao da Silva', 11111, 'Sao Luis', 'Maranhao');
+insert into lista5.aluno values('Maria Silva', 22222, 'Sao Luis', 'Maranhao');
+insert into lista5.aluno values('Mario Souza', 121212, 'Raposa', 'Maranhao');
+insert into lista5.aluno values('Joana Maria', 33333, 'Fortaleza', 'Ceara');
+insert into lista5.aluno  values('Fernanda Siva', 44444, 'Recife', 'Pernambuco');
+
+insert into lista5.formacao values(1,'graduado', 3.000);
+insert into lista5.formacao values(2,'especialista', 5.000);
+insert into lista5.formacao values(3,'mestre', 7.000);
+insert into lista5.formacao values(4,'doutor', 9.000);
+
+insert into lista5.professor values('Jon Silva', 12345, 1 , '01-01-2000', '12-31-2014');
+insert into lista5.professor values('Peter', 21345, 1 , '08-01-2000', '12-31-2014');
+insert into lista5.professor values('Emily Silva', 23456, 2 , '08-01-2002');
+insert into lista5.professor values('Andrea Costa', 232323, 2 , '05-05-2005');
+insert into lista5.professor values('Robert Silva', 343434, 3 , '08-01-2000');
+insert into lista5.professor values('James Smith', 454545, 4 , '08-01-2000');
+
+insert into lista5.curso values(1,'Direitos do Cidadao','humanas',4);
+insert into lista5.curso values(2,'Primeiros Socorros','biologicas',4);
+insert into lista5.curso values(3,'Nocoes de Robotica','tecnologica',4);
+insert into lista5.curso values(4,'Nocoes de Informatica','tecnologica',4);
+insert into lista5.curso values(5,'Matematica Basica','exatas',4);
+
+insert into lista5.oferta values(1,1,12345,'matutino',20,2014,'ufma');
+insert into lista5.oferta values(2,1,12345,'vespertino',20,2014,'ufma');
+insert into lista5.oferta values(3,1,23456,'vespertino',20,2015,'ufma');
+insert into lista5.oferta values(4,2,23456,'vespertino',20,2015,'ufma');
+insert into lista5.oferta values(5,2,232323,'matutino',20,2016,'ufma');
+insert into lista5.oferta values(6,3,343434,'matutino',20,2016,'ufma');
+insert into lista5.oferta values(7,4,343434,'matutino',20,2016,'ufma');
+insert into lista5.oferta values(8,5,454545,'matutino',20,2016,'ufma');
+insert into lista5.oferta values(9,5,454545,'vespertino',20,2016,'ufma');
+insert into lista5.oferta values(10,2,454545,'vespertino',20,2016,'ufma');
+
+insert into lista5.matricula values(11111,1);
+insert into lista5.matricula values(11111,7);
+insert into lista5.matricula values(11111,9);
+insert into lista5.matricula values(11111,10,8.0);
+insert into lista5.matricula values(11111,2,8.0);
+insert into lista5.matricula values(22222,3,9.0);
+insert into lista5.matricula values(22222,4);
+insert into lista5.matricula values(22222,5,8.0);
+insert into lista5.matricula values(33333,5,8.0);
+insert into lista5.matricula values(44444,5,9.0);
+insert into lista5.matricula values(33333,2,5.0);
+insert into lista5.matricula values(44444,1,9.0);
+insert into lista5.matricula values(44444,2,9.0);
+insert into lista5.matricula values(44444,3, 7.0);
+insert into lista5.matricula values(44444,4,5.0);
+insert into lista5.matricula values(44444,10,7.0);
+insert into lista5.matricula values(33333,10,9.0);
+insert into lista5.matricula values(22222,10,9.0);
